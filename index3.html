@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Przejście logowania</title>
+
+<style>
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
+}
+input
+{
+  position:fixed;
+left:831px;
+top:545px;
+z-index:9;
+background-color:transparent;
+border:none;
+height:36px;
+}
+
+/* TŁA */
+.bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: 
+    opacity 1s cubic-bezier(0.4,0,0.2,1),
+    transform 1s cubic-bezier(0.4,0,0.2,1),
+    filter 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* LOCK */
+.lock {
+  background-image: url("lock.jpg");
+  z-index: 2;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* LOGIN */
+.login {
+  background-image: url("login.jpg");
+  z-index: 1;
+  opacity: 0;
+  transform: scale(1.08);
+  filter: blur(20px) brightness(1.05);
+}
+
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.10);
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 3;
+}
+
+/* PANEL */
+.panel {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  text-align: center;
+  color: white;
+  opacity: 0;
+  transition: all 0.6s ease 0.5s;
+  z-index: 4;
+}
+
+/* AKTYWNY STAN */
+.active .lock {
+  opacity: 0;
+  transform: scale(1.05);
+  filter: blur(10px);
+}
+
+.active .login {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0) brightness(1);
+}
+
+.active .overlay {
+  opacity: 1;
+}
+
+.active .panel {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg lock"></div>
+<div class="bg login"></div>
+<div class="overlay"></div>
+
+
+<script>
+let activated = false;
+
+function startAnimation() {
+  if (!activated) {
+    document.body.classList.add("active");
+    activated = true;
+  }
+sequenceEffect();
+}
+
+/* kliknięcie */
+document.body.addEventListener("click", startAnimation);
+
+/* dowolny klawisz */
+document.addEventListener("keydown", startAnimation);
+function sequenceEffect() {
+
+  // 1) po 2 sekundach czarny ekran
+  setTimeout(() => {
+    const black = document.createElement("div");
+    black.style.position = "fixed";
+    black.style.top = "0";
+    black.style.left = "0";
+    black.style.width = "100%";
+    black.style.height = "100%";
+    black.style.background = "black";
+    black.style.zIndex = "9999";
+    document.body.appendChild(black);
+  }, 2000);
+
+  // 2) po 5 sekundach: fullscreen OFF + redirect
+  setTimeout(() => {
+
+    // nie próbujemy wymuszać exitFullscreen jeśli przeglądarka blokuje
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+
+    // przekierowanie
+    window.location.href = "https://chatgpt.com";
+
+  }, 5000);
+}
+
+/* wywołanie (np. po kliknięciu lub klawiszu) */
+document.addEventListener("click", sequenceEffect);
+document.addEventListener("keydown", sequenceEffect);
+</script>
+
+</body>
+</html>
