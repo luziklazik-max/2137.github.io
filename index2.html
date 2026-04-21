@@ -1,7 +1,24 @@
-<style>
-  body
-  {
-    background:url('zrzucik.png') cover center;
-  }
-</style>
-<body>cc</body>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Tło 1920x1080</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      background-image: url("zrzucik.png"); /* tutaj podaj ścieżkę do obrazu */
+      background-size: 1920px 1080px;   /* wymusza konkretny rozmiar */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: black;          /* fallback gdy obraz się nie załaduje */
+    }
+  </style>
+</head>
+<body>
+</body>
+</html>
